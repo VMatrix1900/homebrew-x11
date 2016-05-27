@@ -6,10 +6,11 @@ class Chezscheme < Formula
 
   depends_on :x11 => :build
 
-  conflicts_with "mit-scheme", :because => "both install `scheme` binaries"
-
   def install
-    system "./configure", "--installprefix=#{prefix}"
+    system "./configure",
+              "--installprefix=#{prefix}",
+              "--threads",
+              "--installschemename=chez"
     system "make", "install"
   end
 
@@ -22,6 +23,6 @@ class Chezscheme < Formula
       Hello, World!
     EOS
 
-    assert_equal expected, shell_output("#{bin}/scheme --script hello.ss")
+    assert_equal expected, shell_output("#{bin}/chez --script hello.ss")
   end
 end
